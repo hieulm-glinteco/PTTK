@@ -4,6 +4,7 @@
     Author     : TT
 --%>
 
+<%@page import="model.Member"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,9 +19,63 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                justify-content: center;
+                justify-content: flex-start;
                 height: 100vh;
                 margin: 0;
+            }
+
+            /* ==== HEADER ==== */
+            .header {
+                width: 100%;
+                background-color: rgba(255, 255, 255, 0.1);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px 40px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                position: fixed;
+                top: 0;
+                left: 0;
+                box-sizing: border-box;
+            }
+
+            .header-title {
+                font-size: 1.6rem;
+                font-weight: bold;
+                letter-spacing: 1px;
+            }
+
+            .user-info {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .user-info strong {
+                color: #ffd700;
+            }
+
+            .logout-btn {
+                background-color: #ffffff;
+                border: none;
+                padding: 8px 18px;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-weight: bold;
+                color: #1e3c72;
+            }
+
+            .logout-btn:hover {
+                background-color: #2a5298;
+                color: #fff;
+                transform: translateY(-2px);
+            }
+
+            /* ==== MAIN ==== */
+            main {
+                margin-top: 120px;
+                text-align: center;
             }
 
             h1 {
@@ -31,7 +86,7 @@
             }
 
             /* Khung form */
-            form {
+            .search-form {
                 background-color: rgba(255, 255, 255, 0.1);
                 padding: 40px 50px;
                 border-radius: 15px;
@@ -106,19 +161,45 @@
         </style>
     </head>
     <body>
-        <h1>Search Dish</h1>
+        <%
+            // Lấy đối tượng member từ session
+            Member member = (Member) session.getAttribute("member");
 
-        <form action="${pageContext.request.contextPath}/customer/searchdishservlet" method="post">
-            <div>
-                <input type="text" name="dishname" placeholder="Enter dish name" required/>
-                <input type="hidden" name="orderid" 
-                       value="<%= request.getAttribute("orderid") != null ? request.getAttribute("orderid") : ""%>"/>
-                <input type="submit" name="dishsearch" value="Search"/>
+            // Kiểm tra nếu chưa đăng nhập
+            if (member == null) {
+                response.sendRedirect("../loginView.jsp");
+                return;
+            }
+        %>
+
+        <!-- ==== HEADER ==== -->
+        <div class="header">
+            <div class="header-title">Restaurant Management</div>
+            <div class="user-info">
+                <div>Welcome <strong><%= member.getName()%></strong></div>
+                <form action="${pageContext.request.contextPath}/logout" method="get" style="margin:0;">
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
             </div>
-            <div>
-                <input type="button" name="editreturn" value="Back"
-                       onclick="window.location.href = '${pageContext.request.contextPath}/customer/tableReservationView.jsp';"/>
-            </div>
-        </form>
+        </div>
+
+        <!-- ==== MAIN CONTENT ==== -->
+        <main>
+            <h1>Search Dish</h1>
+
+            <form class="search-form" action="${pageContext.request.contextPath}/customer/searchdishservlet" method="post">
+                <div>
+                    <input type="text" name="dishname" placeholder="Enter dish name" required/>
+                    <input type="hidden" name="orderid" 
+                           value="<%= request.getAttribute("orderid") != null ? request.getAttribute("orderid") : ""%>"/>
+                    <input type="submit" name="dishsearch" value="Search"/>
+                </div>
+                <div>
+                    <input type="button" name="editreturn" value="Back"
+                           onclick="window.location.href = '${pageContext.request.contextPath}/customer/tableReservationView.jsp';"/>
+                </div>
+            </form>
+        </main>
+
     </body>
 </html>
