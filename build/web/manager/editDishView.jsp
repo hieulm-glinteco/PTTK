@@ -7,15 +7,15 @@
 <%@page import="model.Member"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="vi">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Edit Dish</title>
         <style>
             body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background: linear-gradient(135deg, #1e3c72, #2a5298);
-                color: #fff;
+                font-family: 'Segoe UI', sans-serif;
+                background-color: #f8f9fa;
+                color: #333;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -27,7 +27,7 @@
             /* ==== HEADER ==== */
             .header {
                 width: 100%;
-                background-color: rgba(255, 255, 255, 0.1);
+                background-color: #fff;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -43,6 +43,7 @@
                 font-size: 1.6rem;
                 font-weight: bold;
                 letter-spacing: 1px;
+                color: #2a5298;
             }
 
             .user-info {
@@ -52,86 +53,90 @@
             }
 
             .user-info strong {
-                color: #ffd700;
+                color: #2a5298;
             }
 
             .logout-btn {
-                background-color: #ffffff;
+                background-color: #2a5298;
                 border: none;
                 padding: 8px 18px;
                 border-radius: 6px;
                 cursor: pointer;
                 transition: all 0.3s ease;
                 font-weight: bold;
-                color: #1e3c72;
+                color: #fff;
             }
 
             .logout-btn:hover {
-                background-color: #2a5298;
-                color: #fff;
+                background-color: #ffffff;
+                color: #1e3c72;
                 transform: translateY(-2px);
             }
 
             /* ==== MAIN ==== */
             main {
-                margin-top: 120px; /* tránh bị header che */
+                margin-top: 130px;
                 text-align: center;
             }
 
             h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
+                color: #2a5298;
                 margin-bottom: 40px;
-                text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
             }
 
-            .search-form{
-                background-color: rgba(255, 255, 255, 0.15);
+            /* ==== FORM ==== */
+            .search-form {
+                background-color: #fff;
                 padding: 40px 50px;
                 border-radius: 15px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 20px;
-                width: 350px;
+                gap: 25px;
+                width: 380px;
             }
 
             input[type="text"] {
-                width: 92%;
+                width: 100%;
                 padding: 12px 15px;
-                border: none;
+                border: 1px solid #ccc;
                 border-radius: 8px;
                 font-size: 1rem;
                 outline: none;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                transition: border-color 0.3s ease;
             }
 
+            input[type="text"]:focus {
+                border-color: #2a5298;
+            }
+
+            /* ==== BUTTON ==== */
             .btn {
-                background-color: #ffffff;
-                color: #1e3c72;
-                font-weight: bold;
+                background-color: #2a5298;
+                color: white;
+                font-weight: 500;
                 border: none;
                 border-radius: 8px;
                 padding: 12px 20px;
                 cursor: pointer;
                 font-size: 1rem;
                 transition: all 0.3s ease;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
                 width: 100%;
-            }
-            
-            .btn a{
-                text-decoration: none;
-                color: #1e3c72;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             }
 
-            .btn:hover, .btn a:hover {
-                background-color: #2a5298;
-                color: #fff;
+            .btn:hover {
+                background-color: #1e3c72;
                 transform: translateY(-2px);
             }
 
-            /* Chỉnh khoảng cách giữa 2 hàng nút */
+            .btn a {
+                color: white;
+                text-decoration: none;
+            }
+
             form div {
                 display: flex;
                 flex-direction: column;
@@ -139,14 +144,11 @@
                 width: 100%;
             }
         </style>
-
     </head>
+
     <body>
         <%
-            // Lấy đối tượng member từ session
             Member member = (Member) session.getAttribute("member");
-
-            // Kiểm tra nếu chưa đăng nhập
             if (member == null) {
                 response.sendRedirect("../loginView.jsp");
                 return;
@@ -157,7 +159,7 @@
         <div class="header">
             <div class="header-title">Restaurant Management</div>
             <div class="user-info">
-                <div>Welcome <strong><%= member.getName()%></strong></div>
+                <div>Welcome <strong><%= member.getName() %></strong></div>
                 <form action="${pageContext.request.contextPath}/logout" method="get" style="margin:0;">
                     <button type="submit" class="logout-btn">Logout</button>
                 </form>

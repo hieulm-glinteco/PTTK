@@ -13,9 +13,9 @@
     <title>Manage Dish</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -27,7 +27,7 @@
         /* ==== HEADER ==== */
         .header {
             width: 100%;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: #fff;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -43,6 +43,7 @@
             font-size: 1.6rem;
             font-weight: bold;
             letter-spacing: 1px;
+            color: #2a5298;
         }
 
         .user-info {
@@ -52,36 +53,36 @@
         }
 
         .user-info strong {
-            color: #ffd700;
+            color: #2a5298;
         }
 
         .logout-btn {
-            background-color: #ffffff;
+            background-color: #2a5298;
             border: none;
             padding: 8px 18px;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: bold;
-            color: #1e3c72;
+            color: #fff;
         }
 
         .logout-btn:hover {
-            background-color: #2a5298;
-            color: #fff;
+            background-color: #ffffff;
+            color: #1e3c72;
             transform: translateY(-2px);
         }
 
         /* ==== MAIN ==== */
         main {
-            margin-top: 120px; /* tránh bị header che */
+            margin-top: 130px;
             text-align: center;
         }
 
         h1 {
-            font-size: 2.2rem;
+            font-size: 2rem;
+            color: #2a5298;
             margin-bottom: 40px;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
         }
 
         .button-group {
@@ -92,40 +93,36 @@
         }
 
         .btn {
-            background-color: #ffffff;
+            background-color: #2a5298;
+            color: white;
+            font-weight: 500;
             border: none;
             padding: 15px 40px;
             border-radius: 8px;
-            transition: all 0.3s ease;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            width: 200px;
-        }
-
-        button a {
-            text-decoration: none;
-            color: #1e3c72;
-            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 220px;
             font-size: 1rem;
-            display: block;
         }
 
-        button:hover {
-            background-color: #2a5298;
+        .btn:hover {
+            background-color: #1e3c72;
             transform: translateY(-2px);
         }
 
-        button:hover a {
-            color: #fff;
+        .btn a {
+            color: white;
+            text-decoration: none;
+            display: block;
         }
+
     </style>
 </head>
 <body>
     <%
-        // Lấy đối tượng member từ session
         Member member = (Member) session.getAttribute("member");
 
-        // Kiểm tra nếu chưa đăng nhập
         if (member == null) {
             response.sendRedirect("../loginView.jsp");
             return;
@@ -147,7 +144,7 @@
     <main>
         <h1>Manage Dish</h1>
         <div class="button-group">
-            <button class="btn"><a href="editDishView.jsp" >Edit Dish</a></button>
+            <button class="btn"><a href="editDishView.jsp">Edit Dish</a></button>
             <button class="btn"><a href="homeManagerView.jsp">Back</a></button>
         </div>
     </main>

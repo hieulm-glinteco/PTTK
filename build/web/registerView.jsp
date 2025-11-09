@@ -1,14 +1,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Đăng ký tài khoản</title>
+    <title>Register Account</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -17,57 +18,68 @@
         }
 
         form {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 40px;
+            background-color: #fff;
+            padding: 40px 35px;
             border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             width: 400px;
-            text-align: center;
-            backdrop-filter: blur(8px);
+            text-align: left;
         }
 
         h2 {
+            color: #2a5298;
             margin-bottom: 25px;
             font-size: 1.8rem;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        label .required {
+            color: red;
+            margin-left: 2px;
         }
 
         input[type="text"],
         input[type="password"],
         input[type="date"],
         input[type="email"] {
-            width: 85%;
-            padding: 12px;
-            margin: 8px 0;
-            border: none;
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
             border-radius: 8px;
-            outline: none;
             font-size: 1rem;
+            outline: none;
+            box-sizing: border-box;
         }
 
         input[type="submit"] {
-            width: 90%;
-            background-color: #ffffff;
-            color: #1e3c72;
+            width: 100%;
+            background-color: #2a5298;
+            color: #fff;
             font-weight: bold;
             padding: 12px;
-            margin-top: 15px;
+            margin-top: 10px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         input[type="submit"]:hover {
-            background-color: #2a5298;
-            color: #fff;
+            background-color: #1e3c72;
             transform: translateY(-2px);
         }
 
         .error-message {
-            color: #ffb3b3;
-            background-color: rgba(255, 0, 0, 0.15);
+            color: #ff4d4f;
+            background-color: rgba(255, 0, 0, 0.1);
             padding: 10px;
             border-radius: 8px;
             margin-top: 10px;
@@ -81,56 +93,68 @@
         .login-link {
             margin-top: 20px;
             font-size: 0.95rem;
+            text-align: center;
         }
 
         .login-link a {
-            color: #fff;
+            color: #2a5298;
             text-decoration: underline;
             transition: color 0.3s;
         }
 
         .login-link a:hover {
-            color: #ffeb3b;
+            color: #1e3c72;
         }
     </style>
 </head>
 <body>
     <form action="register" method="post">
-        <h2>Đăng ký tài khoản</h2>
+        <h2>Register Account</h2>
 
         <!-- Thông tin đăng nhập -->
-        <input type="text" name="username" placeholder="Tên đăng nhập" required>
-        <input type="password" name="password" placeholder="Mật khẩu" required>
-        <input type="password" name="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+        <label for="username">Username <span class="required">*</span></label>
+        <input type="text" id="username" name="username" placeholder="Enter username" required>
+
+        <label for="password">Password <span class="required">*</span></label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required>
+
+        <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter password" required>
 
         <!-- Thông tin cá nhân -->
-        <input type="text" name="name" placeholder="Họ và tên" required>
-        <input type="date" name="dob" placeholder="Ngày sinh" required>
-        <input type="text" name="address" placeholder="Địa chỉ" required>
-        <input type="text" name="phone" placeholder="Số điện thoại" required pattern="[0-9]{10,11}" title="Chỉ nhập số, từ 10-11 ký tự">
-        <input type="email" name="email" placeholder="Email" required>
+        <label for="name">Full Name <span class="required">*</span></label>
+        <input type="text" id="name" name="name" placeholder="Enter full name" required>
 
-        <input type="submit" value="Đăng ký">
+        <label for="dob">Date of Birth <span class="required">*</span></label>
+        <input type="date" id="dob" name="dob" required>
+
+        <label for="address">Address <span class="required">*</span></label>
+        <input type="text" id="address" name="address" placeholder="Enter address" required>
+
+        <label for="phone">Phone Number <span class="required">*</span></label>
+        <input type="text" id="phone" name="phone" placeholder="Enter phone number" required pattern="[0-9]{10,11}" title="Only numbers, 10-11 digits">
+
+        <label for="email">Email <span class="required">*</span></label>
+        <input type="email" id="email" name="email" placeholder="Enter email" required>
+
+        <input type="submit" value="Register">
 
         <c:if test="${not empty err}">
-<!--            <div class="error-message">
-                ${err}
-            </div>-->
+            <div class="error-message">${err}</div>
         </c:if>
 
         <div class="login-link">
-            Đã có tài khoản? <a href="loginView.jsp">Đăng nhập ngay</a>
+            Already have an account? <a href="loginView.jsp">Login here</a>
         </div>
     </form>
 
     <script>
-        // Kiểm tra mật khẩu trùng khớp trước khi gửi form
         document.querySelector("form").addEventListener("submit", function (e) {
-            const pass = document.querySelector('input[name="password"]').value;
-            const confirm = document.querySelector('input[name="confirmPassword"]').value;
+            const pass = document.querySelector('#password').value;
+            const confirm = document.querySelector('#confirmPassword').value;
             if (pass !== confirm) {
                 e.preventDefault();
-                alert("Mật khẩu nhập lại không khớp. Vui lòng kiểm tra lại!");
+                alert("Passwords do not match. Please check again!");
             }
         });
     </script>
